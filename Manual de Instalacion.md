@@ -45,19 +45,19 @@ Para poder ejecutar un archivo de Pythia dentro de ROOT, se debe de compilar el 
 
 `g++ -I/rutaInstalacionPythia/pythia8307/include (acento invertido)root-config(acento invertido) --cflags nombreArchivo.cc -o nombreArchivo -lpythia8 -L/rutaInstalacionPythia/pythia8307/lib (acento invertido)root-config --glibs(acento invertido)`
 
-Nota: se deben añadir las librerias a las variables del sistema con el siguiente comando: 
+Nota: se deben añadir una libreria a las variables del sistema con el siguiente comando para la compilacion y ejecucion del archivo: 
 
 `export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/rutaInstalacionPythia/pythia8307/lib`
 
-Uno de los casos para ejecutar un archivo de Pythia con ROOT, es obtener un Archivo.root de la ejecucion del archivo en Pythia despues de la compilacion y esto se hace haciendo uso de las librerias de ROOT con la siguientes tres lineas:
+Uno de los casos para ejecutar un archivo de Pythia con ROOT, es obtener un Archivo.root de la ejecucion del archivo en Pythia despues de la compilacion y esto se hace haciendo uso de las librerias de ROOT con la siguientes lineas dentro de nuestro codigo:
 
-`#include "TFile.h"`
+`#include "TFile.h"` Es el archivo de cabecera para la creacion del archivo
 
-`TFile *output = new TFile("Archivo.root", "recreate");`
+`TFile *output = new TFile("Archivo.root", "recreate");` Sera el apuntador que generara nuestro archivo de salida
 
-`output->Write();`
+`output->Write();` Escribe en el archivo
 
-`output->Close();`
+`output->Close();` Se cierra el archivo
 
 Para la ejecucion del archivo en ROOT, se usa el siguiente comando:
 
