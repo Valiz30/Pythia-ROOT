@@ -39,3 +39,26 @@ Dentro de la carpeta ROOT ejecute el comando anterior, o puede ejecutarlo usando
 
 Después de esto con tan solo escribir `# root` en la terminal, se inicia.
 
+# Compilar y Ejecutar un archivo de Pythia en ROOT
+
+Para poder ejecutar un archivo de Pythia dentro de ROOT, se debe de compilar el mismo mandando a llamar las librerias de ROOT desde la linea de comandos, un ejemplo seria de la siguiente forma:
+
+`g++ -I/rutaInstalacionPythia/pythia8307/include (acento invertido)root-config(acento invertido) --cflags nombreArchivo.cc -o nombreArchivo -lpythia8 -L/rutaInstalacionPythia/pythia8307/lib (acento invertido)root-config --glibs(acento invertido)`
+
+Nota: se deben añadir las librerias a las variables del sistema con el siguiente comando: 
+
+`export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/rutaInstalacionPythia/pythia8307/lib`
+
+Uno de los casos para ejecutar un archivo de Pythia con ROOT, es obtener un Archivo.root de la ejecucion del archivo en Pythia despues de la compilacion y esto se hace haciendo uso de las librerias de ROOT con la siguientes tres lineas:
+
+`#include "TFile.h"`
+
+`TFile *output = new TFile("Archivo.root", "recreate");`
+
+`output->Write();`
+
+`output->Close();`
+
+Para la ejecucion del archivo en ROOT, se usa el siguiente comando:
+
+`$ root Archivo.root`
