@@ -4,7 +4,7 @@
 #include "TFile.h"
 #include "TTree.h"
 #include "TROOT.h"
-//using std::string;
+#include "salidaDatos.cc"
 int main(){
     // ----------- Inicializacion -----------
     Pythia8::Pythia pythia; //Objeto de Pythia
@@ -19,7 +19,7 @@ int main(){
     // pythia.readFile(cardfile.cmnd); ejemplo para la lectura de un archivo
 
     // ----------- Declaracion de variables locales, histogramas, enlaces externos, etc -----------
-    int totalEventos = 1000, id, tamano, numeroParticula, evento;
+    int totalEventos = 100, id, tamano, numeroParticula, evento;
     double masa, px, py, pz;
     std::string salidaPtr = {};
     TFile *salida = new TFile("Actividad1.root", "recreate");
@@ -55,9 +55,9 @@ int main(){
             salidaPtr = salidaPtr + std::to_string(py) + " ";
             pz = pythia.event[j].pz();
             salidaPtr = salidaPtr + std::to_string(pz);
-            gROOT->ProcessLine(".x salidaDatos.C(salidaPtr)");
+            salidaDatos(salidaPtr);
             arbol->Fill();
-            std::cout << salidaPtr << std::endl;
+            //std::cout << salidaPtr << std::endl;
             salidaPtr = {};
         }
         
