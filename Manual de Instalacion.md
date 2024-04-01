@@ -46,11 +46,14 @@ Para **evitar** tener que ejecutar las lineas anteriores, a excepción de `# roo
 
 Para poder ejecutar un archivo de Pythia dentro de ROOT, se debe de compilar el mismo mandando a llamar las librerias de ROOT desde la linea de comandos, un ejemplo seria de la siguiente forma:
 
-`g++ -I/rutaInstalacionPythia/pythia8307/include (acento invertido)root-config(acento invertido) --cflags nombreArchivo.cc -o nombreArchivo -lpythia8 -L/rutaInstalacionPythia/pythia8307/lib (acento invertido)root-config --glibs(acento invertido)`
+`g++ -I/rutaInstalacionPythia/pythia8307/include (acento invertido)root-config --cflags(acento invertido) nombreArchivo.cc -o nombreArchivo -lpythia8 -L/rutaInstalacionPythia/pythia8307/lib (acento invertido)root-config --glibs(acento invertido)`
 
 Nota: se deben añadir una libreria a las variables del sistema con el siguiente comando para la compilacion y ejecucion del archivo: 
 
 `export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/rutaInstalacionPythia/pythia8307/lib`
+
+Para **evitar** tener que ejecutar la linea anterior cada que se inicia una nueva terminal, se puede añadir la misma linea al archivo .bashrc. Puedes acceder de la siguiente forma: 
+`# nano ~/.bashrc`
 
 Uno de los casos para ejecutar un archivo de Pythia con ROOT, es obtener un Archivo.root de la ejecucion del archivo en Pythia despues de la compilacion y esto se hace haciendo uso de las librerias de ROOT con la siguientes lineas dentro de nuestro codigo:
 
