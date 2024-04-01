@@ -39,6 +39,9 @@ Dentro de la carpeta ROOT ejecute el comando anterior, o puede ejecutarlo usando
 
 Después de esto con tan solo escribir `# root` en la terminal, se inicia.
 
+Para **evitar** tener que ejecutar las lineas anteriores, a excepción de `# root`, cada que se ejecuta una nueva terminal, se recomienda añadir la linea **source rutaAbsoluta/thisroot.sh** al archivo **.bashrc**. Puedes acceder de la siguiente forma: 
+`# nano ~/.bashrc`
+
 # Compilar y Ejecutar un archivo de Pythia en ROOT
 
 Para poder ejecutar un archivo de Pythia dentro de ROOT, se debe de compilar el mismo mandando a llamar las librerias de ROOT desde la linea de comandos, un ejemplo seria de la siguiente forma:
