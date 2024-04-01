@@ -52,7 +52,7 @@ Nota: se deben añadir una libreria a las variables del sistema con el siguiente
 
 `export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/rutaInstalacionPythia/pythia8307/lib`
 
-Para **evitar** tener que ejecutar la linea anterior cada que se inicia una nueva terminal, se puede añadir la misma linea al archivo .bashrc. Puedes acceder de la siguiente forma: 
+Para **evitar** tener que ejecutar la linea anterior cada que se inicia el sistema operativo, se puede añadir la misma linea al archivo .bashrc. Puedes acceder de la siguiente forma: 
 `# nano ~/.bashrc`
 
 Uno de los casos para ejecutar un archivo de Pythia con ROOT, es obtener un Archivo.root de la ejecucion del archivo en Pythia despues de la compilacion y esto se hace haciendo uso de las librerias de ROOT con la siguientes lineas dentro de nuestro codigo:
