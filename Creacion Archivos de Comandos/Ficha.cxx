@@ -1,8 +1,3 @@
-/*
-Información de contacto:
-Correo: valiz_30@hotmail.com
-*/
-
 #include <TApplication.h>
 #include <TGClient.h>
 #include <TCanvas.h>
@@ -82,8 +77,6 @@ void MyMainFrame::siguiente(){
     TGTextButton *agregar = new TGTextButton(hframe,"&Agregar");
     agregar->Connect("Clicked()","MyMainFrame",this,"aniadir()");
     hframe->AddFrame(agregar, new TGLayoutHints(kLHintsCenterX,5,5,3,4));
-    TGTextButton *salir = new TGTextButton(hframe,"&Salir","gApplication->Terminate(0)");
-    hframe->AddFrame(salir, new TGLayoutHints(kLHintsCenterX,5,5,3,4));
     fMain->AddFrame(hframe, new TGLayoutHints(kLHintsCenterX,2,2,2,2));
     // Set a name to the main frame
     fMain->SetWindowName("Ficha");
