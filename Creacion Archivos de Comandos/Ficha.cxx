@@ -1,3 +1,8 @@
+/*
+Información de contacto:
+Correo: valiz_30@hotmail.com
+*/
+
 #include <TApplication.h>
 #include <TGClient.h>
 #include <TCanvas.h>
