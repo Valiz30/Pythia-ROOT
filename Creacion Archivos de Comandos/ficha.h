@@ -1,3 +1,8 @@
+/*
+Información de contacto:
+Correo: valiz_30@hotmail.com
+*/
+
 #include <TQObject.h>
 #include <TGButton.h>
 #include <TList.h>
