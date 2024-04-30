@@ -98,3 +98,6 @@ Para ejecutar la aplicación solo es necesario la siguiente línea: `./nombreApl
 
 <h4 align="center">»»-------------¤-------------««</h4>
 
+### Informacion de contacto: 
+Correo: valiz_30@hotmail.com
+
