@@ -1,8 +1,3 @@
-/*
-Información de contacto:
-Correo: valiz_30@hotmail.com
-*/
-
 #include <TQObject.h>
 #include <RQ_OBJECT.h>
 #include <TGTextEntry.h>
@@ -34,6 +29,7 @@ RQ_OBJECT("MyMainFrame")
         void histograma2();
         void histograma3();
         void histograma4();
-        void grafico1();
+        void histograma5();
+        void histograma6();
 };
 

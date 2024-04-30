@@ -1,8 +1,3 @@
-/*
-Información de contacto:
-Correo: valiz_30@hotmail.com
-*/
-
 #include <TApplication.h>
 #include <TGClient.h>
 #include <TCanvas.h>
@@ -30,11 +25,13 @@ Correo: valiz_30@hotmail.com
 using std::string;
 using std::vector;
 Pythia8::Pythia     pythia;
-int totalEventos = 0, xMaxNC = 0, xMaxC = 0, yMaxP = 0;
+int totalEventos = 0, xMaxNC = 0, xMaxC = 0, yMaxP = 0, xMaxEF = 0;
 TH1F *HParticulasCargadas = new TH1F("histograma1","Particulas Cargadas; Particulas Cargadas; Eventos",1001,-1,1000);
 TH1F *HParticulasNoCargadas = new TH1F("histograma2","Particulas no Cargadas; Particulas no Cargadas; Eventos",1001,-1,5000);
+TH1F *HParticulasEstadoFinal = new TH1F("histograma6","Particulas en Estado Final; Particulas en Estado Final; Eventos",1001,-1,5000);
 TH1F *HMomentoTransverso = new TH1F("histograma3","Momento Transverso; Momento Transverso; Eventos", 120, 0, 60);
 TH1F *HPseudorapidity = new TH1F("histograma4","Pseudorapidity; n; Particulas", 200, -20, 20);
+TH2F *HPromedio = new TH2F("histograma5","<pT>; Particulas Cargadas; <pT>", 100, 0, 1000, 100, 0, 10);
 TFile *salida = new TFile("Salida.root", "recreate");
 TTree *tree1 = new TTree("tree1", "tree1");
 TTree *tree2 = new TTree("tree2", "tree2");
@@ -61,7 +58,7 @@ MyMainFrame::MyMainFrame(const TGWindow *p,UInt_t w,UInt_t h) {
 
 
     // Set a name to the main frame
-    fMain->SetWindowName("Ficha");
+    fMain->SetWindowName("Principal");
     // Map all subwindows of main frame
     fMain->MapSubwindows();
     // Initialize the layout algorithm
@@ -132,20 +129,24 @@ void MyMainFrame::procesarArchivo(){
         if(xMaxC < cargadas){
             xMaxC = cargadas;
         }
-        HParticulasCargadas->Fill(cargadas, i);
+        if(xMaxEF < estadoFinal){
+            xMaxEF = estadoFinal;
+        }
+        HParticulasCargadas->Fill(cargadas);
 
         totalNoCargadas = tParticulasEvento - cargadas;
         if(xMaxNC < totalNoCargadas){
             xMaxNC = totalNoCargadas;
         }
-        HParticulasNoCargadas->Fill(totalNoCargadas, i);
+        HParticulasNoCargadas->Fill(totalNoCargadas);
+
+        HParticulasEstadoFinal->Fill(estadoFinal);
         
         tree1->Fill();
 
         promedio = sumatoriapT / cargadas;
-        promediopT.push_back(promedio);
 
-        pcargadas.push_back(cargadas);
+        HPromedio->Fill(cargadas, promedio);
 
         cargadas = 0;
         estadoFinal = 0;
@@ -171,6 +172,9 @@ void MyMainFrame::procesarArchivo(){
     TGTextButton *Histograma2 = new TGTextButton(gframe,"&Particulas No Cargadas");
     Histograma2->Connect("Clicked()","MyMainFrame",this,"histograma2()");
     gframe->AddFrame(Histograma2, new TGLayoutHints(kLHintsCenterX,5,5,3,4));
+    TGTextButton *Histograma6 = new TGTextButton(gframe,"&Particulas en Estado Final");
+    Histograma6->Connect("Clicked()","MyMainFrame",this,"histograma6()");
+    gframe->AddFrame(Histograma6, new TGLayoutHints(kLHintsCenterX,5,5,3,4));
     fMain->AddFrame(gframe, new TGLayoutHints(kLHintsCenterX,2,2,2,2));
 
     TGHorizontalFrame *kframe = new TGHorizontalFrame(fMain,200,40);
@@ -191,7 +195,7 @@ void MyMainFrame::procesarArchivo(){
 
     TGHorizontalFrame *lframe = new TGHorizontalFrame(fMain,200,40);
     TGTextButton *Grafico1 = new TGTextButton(lframe,"&Promedio pT");
-    Grafico1->Connect("Clicked()","MyMainFrame",this,"grafico1()");
+    Grafico1->Connect("Clicked()","MyMainFrame",this,"histograma5()");
     lframe->AddFrame(Grafico1, new TGLayoutHints(kLHintsCenterX,5,5,3,4));
     TGTextButton *Histograma4 = new TGTextButton(lframe,"&Pseudorapidity");
     Histograma4->Connect("Clicked()","MyMainFrame",this,"histograma4()");
@@ -215,17 +219,16 @@ void MyMainFrame::procesarArchivo(){
 }
 void MyMainFrame::histograma1(){
     TCanvas *c1=new TCanvas("1");
-    HParticulasCargadas->SetAxisRange(0, xMaxC, "X");
+    HParticulasCargadas->SetAxisRange(0, xMaxC/2, "X");//xMaxC
     HParticulasCargadas->Fit("expo");
-    HParticulasCargadas->GetYaxis()->SetRangeUser(0,totalEventos);
+    //HParticulasCargadas->GetYaxis()->SetRangeUser(0,totalEventos);
     HParticulasCargadas->Draw();
 }
 
 void MyMainFrame::histograma2(){
     TCanvas *c2=new TCanvas("2");
-    HParticulasNoCargadas->SetAxisRange(0, xMaxNC, "X");
-    HParticulasNoCargadas->Fit("expo");
-    HParticulasNoCargadas->GetYaxis()->SetRangeUser(0,totalEventos);
+    HParticulasNoCargadas->SetAxisRange(0, xMaxNC/2, "X");
+    HParticulasNoCargadas->Fit("gaus");
     HParticulasNoCargadas->Draw();
 }
 
@@ -234,29 +237,27 @@ void MyMainFrame::histograma3(){
     string s(recorte1->GetText()), s2(recorte2->GetText());;
     HMomentoTransverso->SetAxisRange(stoi(s),stoi(s2),"X");
     HMomentoTransverso->Fit("expo");
-    HMomentoTransverso->GetYaxis()->SetRangeUser(0,totalEventos);
     HMomentoTransverso->Draw();
 }
 void MyMainFrame::histograma4(){
     TCanvas *c5=new TCanvas("5");
-    HPseudorapidity->SetAxisRange(0, yMaxP, "Y");
+    HPseudorapidity->SetAxisRange(0, yMaxP/2, "Y");
     HPseudorapidity->Fit("gaus");
     HPseudorapidity->Draw();
 }
 
-void MyMainFrame::grafico1(){
+void MyMainFrame::histograma5(){
     TCanvas *c4=new TCanvas("4");
-    float promedioPT[totalEventos], particulasEvento[totalEventos];
-    for(int i = 0; i < totalEventos; i++){
-        promedioPT[i] = promediopT[i];
-        particulasEvento[i] = pcargadas[i];
-    }
-    TGraph *grafico = new TGraph(totalEventos, particulasEvento, promedioPT);
-    grafico->SetMarkerStyle(kFullCircle);
-    grafico->GetXaxis()->SetTitle("#P. Cargadas");
-    grafico->GetYaxis()->SetTitle("<pT>");
-    grafico->Draw("A*");
+    HPromedio->SetAxisRange(0, xMaxC/2, "X");
+    HPromedio->Fit("gaus");
+    HPromedio->Draw();
     
+}
+void MyMainFrame::histograma6(){
+    TCanvas *c6=new TCanvas("6");
+    HParticulasEstadoFinal->SetAxisRange(0, xMaxEF/2, "X");
+    HParticulasEstadoFinal->Fit("gaus");
+    HParticulasEstadoFinal->Draw();
 }
 
 void crearVentana() {
