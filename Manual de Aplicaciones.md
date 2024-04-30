@@ -1,4 +1,6 @@
 # Pythia-ROOT!
+
+## Instalacion 
 NOTAS:
 - La distribución para la que se implementó el Script es Ubuntu 20, se puede modificar el Script fácilmente para otras distribuciones, la explicación se desglosara en el apartado con el nombre "Diferente distribución"
 - Se recomienda colocar el Script en la carpeta donde el usuario instale sus aplicaciones, el Script creara dos carpetas, ROOT Y PYTHIA
@@ -15,7 +17,7 @@ El proceso de instalación de ambos paquetes, tanto ROOT como Pythia, debe de se
 `root@valiz:/home/valiz/Software# ./InstalarRP.sh`
 4. Pedirá permisos de almacenamiento, después de acceder solo queda esperar a que termine la ejecución y tendrá ambos paquetes instalados.
 
-# Diferente Distribución / Diferente Versión
+### Diferente Distribución / Diferente Versión
 
 Tanto como para una distribución diferente como para una versión de ROOT, se deberá de acceder al siguiente enlace: https://root.cern/install/all_releases/
 1. Selecciona una versión y según sea la distribución que usted posea, solo tendrá que copiar el enlace que proporciona la página y colocarlo en la siguiente línea:
@@ -30,7 +32,9 @@ NOTA: También se debe de reemplazar en la siguiente línea:
 
 En el caso de Pythia se hace el mismo proceso de forma análoga, reemplazando donde se descarga el paquete y se descomprime.
 
-# Iniciar ROOT
+<h4 align="center">»»-------------¤-------------««</h4>
+
+## Iniciar ROOT
 
 Cada vez que necesite iniciar ROOT, primero tendrá que ejecutar la siguiente línea: `# source root/bin/thisroot.sh`
 
@@ -40,20 +44,22 @@ Dentro de la carpeta ROOT ejecute el comando anterior, o puede ejecutarlo usando
 Después de esto con tan solo escribir `# root` en la terminal, se inicia.
 
 Para **evitar** tener que ejecutar las lineas anteriores, a excepción de `# root`, cada que se ejecuta una nueva terminal, se recomienda añadir la linea **source rutaAbsoluta/thisroot.sh** al archivo **.bashrc**. Puedes acceder de la siguiente forma: 
-`# nano ~/.bashrc`
+`# nano ~/.bashrc` y añadirlo al final del archivo.
 
-# Compilar y Ejecutar un archivo de Pythia en ROOT
+<h4 align="center">»»-------------¤-------------««</h4>
+
+## Compilar y Ejecutar un archivo de Pythia en ROOT
 
 Para poder ejecutar un archivo de Pythia dentro de ROOT, se debe de compilar el mismo mandando a llamar las librerias de ROOT desde la linea de comandos, un ejemplo seria de la siguiente forma:
 
 `g++ -I/rutaInstalacionPythia/pythia8307/include (acento invertido)root-config --cflags(acento invertido) nombreArchivo.cc -o nombreArchivo -lpythia8 -L/rutaInstalacionPythia/pythia8307/lib (acento invertido)root-config --glibs(acento invertido)`
 
-Nota: se deben añadir una libreria a las variables del sistema con el siguiente comando para la compilacion y ejecucion del archivo: 
+Nota: se deben añadir una libreria a las variables del sistema con el siguiente comando para la compilacion y ejecucion del archivo y el uso de Pythia: 
 
 `export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/rutaInstalacionPythia/pythia8307/lib`
 
-Para **evitar** tener que ejecutar la linea anterior cada que se inicia el sistema operativo, se puede añadir la misma linea al archivo .bashrc. Puedes acceder de la siguiente forma: 
-`# nano ~/.bashrc`
+Para **evitar** tener que ejecutar la linea anterior cada que se inicia el sistema operativo, se puede añadir la misma linea al final del archivo .bashrc. Puedes acceder de la siguiente forma: 
+`# nano ~/.bashrc` 
 
 Uno de los casos para ejecutar un archivo de Pythia con ROOT, es obtener un Archivo.root de la ejecucion del archivo en Pythia despues de la compilacion y esto se hace haciendo uso de las librerias de ROOT con la siguientes lineas dentro de nuestro codigo:
 
@@ -68,3 +74,31 @@ Uno de los casos para ejecutar un archivo de Pythia con ROOT, es obtener un Arch
 Para la ejecucion del archivo en ROOT, se usa el siguiente comando:
 
 `$ root Archivo.root`
+
+<h4 align="center">»»-------------¤-------------««</h4>
+
+## Compilar y ejecutar las aplicaciones del Repositorio
+
+### Nota: 
+Antes de compilar una aplicacion, se necesita enlazar un diccionario de ROOT con los archivos que se trabajaran. Esto para el caso en el que se requiera que la aplicacion funcione de manera independiente a la terminal de ROOT. 
+
+- Solo se ejecutara la siguente linea: `rootcling -f Dict.cxx -c principal.h LinkDef.h`
+  **principal.h** es la libreria que contendra la clases usadas en nuestra aplicacion, ademas de las variables globales.
+  **LinkDef.cxx** es el archivo que conectara el diccionario de ROOT con nuestra aplicacion, se debe especificar la clase a la que estara ligado.
+  **Dict.cxx** es el archivo que se creara y que contendra el enlace de ROOT con nuestra aplicacion.
+- En el caso de las aplicaciones cargadas en el repositorio, ya no es necesario que se ejecute la linea, puesto que ya existe la conexión.
+
+Para ejecutar la aplicación, es necesario tener los archivos antes mencionados en el mismo lugar que el archivo con el codigo principal para que se pueda ejecutar correctamente.
+
+### Compilando usando un archivo Makefile:
+- Para cada aplicacion se creo un archivo Makefile que se encuentra en su carpeta asignada.
+- Para compilar se introduce la siguiente linea `make nombreAplicacion` 
+
+#### Nota:
+Los archivos Makefile cargados en el repositorio necesitan ser modificados. Se debe especificar la direccion donde se encuentran los archivos necesarios mencionados en el apartado **Compilar y Ejecutar un archivo de Pythia en ROOT**
+
+### Ejecutar la aplicacion
+Para ejecutar la aplicacion solo es necesario la siguiente linea: `./nombreAplicacion` 
+
+<h4 align="center">»»-------------¤-------------««</h4>
+
