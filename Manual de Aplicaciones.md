@@ -43,27 +43,22 @@ Dentro de la carpeta ROOT ejecute el comando anterior, o puede ejecutarlo usando
 
 Después de esto con tan solo escribir `# root` en la terminal, se inicia.
 
-Para **evitar** tener que ejecutar las lineas anteriores, a excepción de `# root`, cada que se ejecuta una nueva terminal, se recomienda añadir la linea **source rutaAbsoluta/thisroot.sh** al archivo **.bashrc**. Puedes acceder de la siguiente forma: 
+Para **evitar** tener que ejecutar las líneas anteriores, a excepción de `# root`, cada que se ejecuta una nueva terminal, se recomienda añadir la línea **source rutaAbsoluta/thisroot.sh** al archivo **.bashrc**. Puedes acceder de la siguiente forma: 
 `# nano ~/.bashrc` y añadirlo al final del archivo.
 
 <h4 align="center">»»-------------¤-------------««</h4>
 
 ## Compilar y Ejecutar un archivo de Pythia en ROOT
+Para poder ejecutar un archivo de Pythia dentro de ROOT, se debe de compilar el mismo mandando a llamar las librerías de ROOT desde la linea de comandos, un ejemplo sería de la siguiente forma: 
+`g++ -I/rutaInstalacionPythia/pythia8307/include (acento invertido)root-config --cflags(acento invertido) nombreArchivo.cc -o nombreArchivo -lpythia8 -L/rutaInstalacionPythia/pythia8307/lib (acento invertido)root-config --glibs(acento invertido)` 
 
-Para poder ejecutar un archivo de Pythia dentro de ROOT, se debe de compilar el mismo mandando a llamar las librerias de ROOT desde la linea de comandos, un ejemplo seria de la siguiente forma:
+Nota: se deben añadir una librería a las variables del sistema con el siguiente comando para la compilación y ejecución del archivo y el uso de Pythia:  `export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/rutaInstalacionPythia/pythia8307/lib` 
 
-`g++ -I/rutaInstalacionPythia/pythia8307/include (acento invertido)root-config --cflags(acento invertido) nombreArchivo.cc -o nombreArchivo -lpythia8 -L/rutaInstalacionPythia/pythia8307/lib (acento invertido)root-config --glibs(acento invertido)`
+Para **evitar** tener que ejecutar la línea anterior cada que se inicia el sistema operativo, se puede añadir la misma línea al final del archivo .bashrc. Puedes acceder de la siguiente forma:  `# nano ~/.bashrc`  
 
-Nota: se deben añadir una libreria a las variables del sistema con el siguiente comando para la compilacion y ejecucion del archivo y el uso de Pythia: 
+Uno de los casos para ejecutar un archivo de Pythia con ROOT, es obtener un Archivo.root de la ejecución del archivo en Pythia después de la compilación y esto se hace haciendo uso de las librerías de ROOT con las siguientes líneas dentro de nuestro código: 
 
-`export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/rutaInstalacionPythia/pythia8307/lib`
-
-Para **evitar** tener que ejecutar la linea anterior cada que se inicia el sistema operativo, se puede añadir la misma linea al final del archivo .bashrc. Puedes acceder de la siguiente forma: 
-`# nano ~/.bashrc` 
-
-Uno de los casos para ejecutar un archivo de Pythia con ROOT, es obtener un Archivo.root de la ejecucion del archivo en Pythia despues de la compilacion y esto se hace haciendo uso de las librerias de ROOT con la siguientes lineas dentro de nuestro codigo:
-
-`#include "TFile.h"` Es el archivo de cabecera para la creacion del archivo
+`#include "TFile.h"` Es el archivo de cabecera para la creación del archivo
 
 `TFile *output = new TFile("Archivo.root", "recreate");` Sera el apuntador que generara nuestro archivo de salida
 
@@ -71,7 +66,7 @@ Uno de los casos para ejecutar un archivo de Pythia con ROOT, es obtener un Arch
 
 `output->Close();` Se cierra el archivo
 
-Para la ejecucion del archivo en ROOT, se usa el siguiente comando:
+Para la ejecución del archivo en ROOT, se usa el siguiente comando: 
 
 `$ root Archivo.root`
 
@@ -80,25 +75,26 @@ Para la ejecucion del archivo en ROOT, se usa el siguiente comando:
 ## Compilar y ejecutar las aplicaciones del Repositorio
 
 ### Nota: 
-Antes de compilar una aplicacion, se necesita enlazar un diccionario de ROOT con los archivos que se trabajaran. Esto para el caso en el que se requiera que la aplicacion funcione de manera independiente a la terminal de ROOT. 
+Antes de compilar una aplicación, se necesita enlazar un diccionario de ROOT con los archivos que se trabajaran. Esto para el caso en el que se requiera que la aplicación funcione de manera independiente a la terminal de ROOT. 
 
-- Solo se ejecutara la siguente linea: `rootcling -f Dict.cxx -c principal.h LinkDef.h`
-  **principal.h** es la libreria que contendra la clases usadas en nuestra aplicacion, ademas de las variables globales.
-  **LinkDef.cxx** es el archivo que conectara el diccionario de ROOT con nuestra aplicacion, se debe especificar la clase a la que estara ligado.
-  **Dict.cxx** es el archivo que se creara y que contendra el enlace de ROOT con nuestra aplicacion.
-- En el caso de las aplicaciones cargadas en el repositorio, ya no es necesario que se ejecute la linea, puesto que ya existe la conexión.
+- Solo se ejecutará la siguente línea: `rootcling -f Dict.cxx -c principal.h LinkDef.h`
+  **principal.h** es la librería que contendrá las clases usadas en nuestra aplicación, además de las variables globales. 
+  **LinkDef.cxx** es el archivo que conectará el diccionario de ROOT con nuestra aplicación, se debe especificar la clase a la que estará ligado. 
+  **Dict.cxx** es el archivo que se creará y que contendrá el enlace de ROOT con nuestra aplicación. 
+- En el caso de las aplicaciones cargadas en el repositorio, ya no es necesario que se ejecute la línea, puesto que ya existe la conexión. 
 
-Para ejecutar la aplicación, es necesario tener los archivos antes mencionados en el mismo lugar que el archivo con el codigo principal para que se pueda ejecutar correctamente.
+Para ejecutar la aplicación, es necesario tener los archivos antes mencionados en el mismo lugar que el archivo con el código principal para que se pueda ejecutar correctamente. 
 
-### Compilando usando un archivo Makefile:
-- Para cada aplicacion se creo un archivo Makefile que se encuentra en su carpeta asignada.
-- Para compilar se introduce la siguiente linea `make nombreAplicacion` 
+### Compilando usando un archivo Makefile: 
+- Para cada aplicación se creó un archivo Makefile que se encuentra en su carpeta asignada. 
+- Para compilar se introduce la siguiente línea `make nombreAplicacion` 
 
 #### Nota:
-Los archivos Makefile cargados en el repositorio necesitan ser modificados. Se debe especificar la direccion donde se encuentran los archivos necesarios mencionados en el apartado **Compilar y Ejecutar un archivo de Pythia en ROOT**
+Los archivos Makefile cargados en el repositorio necesitan ser modificados. Se debe especificar la dirección donde se encuentran los archivos necesarios mencionados en el apartado **Compilar y Ejecutar un archivo de Pythia en ROOT** 
 
-### Ejecutar la aplicacion
-Para ejecutar la aplicacion solo es necesario la siguiente linea: `./nombreAplicacion` 
+
+### Ejecutar la aplicación 
+Para ejecutar la aplicación solo es necesario la siguiente línea: `./nombreAplicacion` 
 
 <h4 align="center">»»-------------¤-------------««</h4>
 
