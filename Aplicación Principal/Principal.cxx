@@ -52,8 +52,6 @@ MyMainFrame::MyMainFrame(const TGWindow *p,UInt_t w,UInt_t h) {
     TGTextButton *cargar = new TGTextButton(hframe,"&Cargar Archivo");
     cargar->Connect("Clicked()","MyMainFrame",this,"procesarArchivo()");
     hframe->AddFrame(cargar, new TGLayoutHints(kLHintsCenterX,5,5,3,4));
-    TGTextButton *salir = new TGTextButton(hframe,"&Salir","gApplication->Terminate(0)");
-    hframe->AddFrame(salir, new TGLayoutHints(kLHintsCenterX,5,5,3,4));
     fMain->AddFrame(hframe, new TGLayoutHints(kLHintsCenterX,2,2,2,2));
 
 
