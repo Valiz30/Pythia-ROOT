@@ -20,9 +20,6 @@ string arregloC[1882];
 MyMainFrame::MyMainFrame(const TGWindow *p,UInt_t w,UInt_t h) {
     // Create a main frame
     fMain = new TGMainFrame(p,w,h);
-    // Create canvas widget
-    //fEcanvas = new TRootEmbeddedCanvas("Ecanvas",fMain,200,200);
-    //fMain->AddFrame(fEcanvas, new TGLayoutHints(kLHintsExpandX | kLHintsExpandY, 10,10,10,1));
     TGHorizontalFrame *hframe = new TGHorizontalFrame(fMain,200,40);
     TGLabel *label = new TGLabel(hframe, "Nombre del Archivo: ");
     hframe->AddFrame(label, new TGLayoutHints(kLHintsLeft | kLHintsCenterY));
